@@ -12,8 +12,12 @@ generator erd {
 }
 
 model User {
-  id   String @id @default(uuid())
-  nome String
+  id    String @id @default(uuid())
+  nome  String
+  email String @unique
+  senha String
+
+  Edificio Edificio[]
 
   @@map("users")
 }
@@ -22,6 +26,9 @@ model Edificio {
   id           String @id @default(uuid())
   nome         String
   apartamentos Int
+
+  users   User   @relation(fields: [id_user], references: [id])
+  id_user String
 
   Apartamento Apartamento[]
 
