@@ -11,24 +11,11 @@ generator erd {
   provider = "prisma-erd-generator"
 }
 
-model User {
-  id    String @id @default(uuid())
-  nome  String
-  email String @unique
-  senha String
-
-  Edificio Edificio[]
-
-  @@map("users")
-}
-
 model Edificio {
-  id           String @id @default(uuid())
-  nome         String
+  id           Int      @id @default(autoincrement())
+  nome         String   @unique
   apartamentos Int
-
-  users   User   @relation(fields: [id_user], references: [id])
-  id_user String
+  createdAt    DateTime @default(now())
 
   Apartamento Apartamento[]
 
@@ -36,15 +23,15 @@ model Edificio {
 }
 
 model Apartamento {
-  id         String  @id @default(uuid())
-  numero     Int
+  id         Int     @id @default(autoincrement())
+  numero     Int     @unique
   aluguel    Int
   locatario  String
   locador    String
   disponivel Boolean
 
   edificio    Edificio @relation(fields: [id_edificio], references: [id])
-  id_edificio String
+  id_edificio Int
 
   Locatario Locatario?
 
@@ -52,12 +39,12 @@ model Apartamento {
 }
 
 model Locatario {
-  id   String @id @default(uuid())
+  id   Int    @id @default(autoincrement())
   nome String
   cpf  Int    @unique
 
   apartament     Apartamento @relation(fields: [id_apartamento], references: [id])
-  id_apartamento String      @unique
+  id_apartamento Int         @unique
 
-  @@map("locatarios")
+  @@map("locatario")
 }

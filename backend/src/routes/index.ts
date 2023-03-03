@@ -1,8 +1,12 @@
 import { Router } from "express";
-import userRoutes from "./user.routes";
+import apartamentosRoutes from "./apartamentos.routes";
+import edificiosRoutes from "./edificios.routes";
+import locatarioRoutes from "./locatario.routes";
 
 const routes = Router()
 
-routes.use("/users", userRoutes)
+routes.use("/edificios", edificiosRoutes)
+routes.use("/apartamentos", apartamentosRoutes)
+routes.use("/locatario", locatarioRoutes)
 
 export default routes
