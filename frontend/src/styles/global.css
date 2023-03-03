@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: Poppins, sans-serif;
+}
+.from-primary {
+  color: #0a6789;
+}
+.text-primary {
+  color: #0a6789;
+}
+
+.bg-primary {
+  background-color: #0a6789;
+  color: white;
+}
