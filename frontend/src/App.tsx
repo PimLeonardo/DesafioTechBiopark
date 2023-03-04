@@ -1,14 +1,20 @@
+import { useState } from "react";
 import ApartamentosList from "./components/ApartamentosList"
-import NavList from "./components/NavList"
+import EdificioList from "./components/EdificioList"
+import Modal from "./components/Modal";
+import { api } from "./utils/api";
 
 function App() {
+  const [idEdificio, setIdEdificio] = useState<number | null>();
 
   return (
-    <div className="w-full h-full flex">
-      <NavList />
-      <div className="w-full h-screen bg-gray-100 bg-center bg-no-repeat bg-contain bg-[url('./background_logo.png')]">
-        <ApartamentosList />
-      </div>
+    <div className="w-full h-full flex relative">
+      <EdificioList
+        setIdEdificio={setIdEdificio}
+      />
+      <ApartamentosList
+        idEdificio={idEdificio}
+      />
     </div>
   )
 }
