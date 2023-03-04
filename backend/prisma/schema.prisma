@@ -12,10 +12,9 @@ generator erd {
 }
 
 model Edificio {
-  id           Int      @id @default(autoincrement())
-  nome         String   @unique
-  apartamentos Int
-  createdAt    DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  nome      String   @unique
+  createdAt DateTime @default(now())
 
   Apartamento Apartamento[]
 
@@ -25,7 +24,7 @@ model Edificio {
 model Apartamento {
   id         Int     @id @default(autoincrement())
   numero     Int     @unique
-  aluguel    Int
+  aluguel    Float
   locatario  String
   locador    String
   disponivel Boolean

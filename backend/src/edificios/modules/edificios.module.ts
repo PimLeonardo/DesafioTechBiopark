@@ -2,11 +2,10 @@ import { Edificio } from "@prisma/client";
 import { prisma } from "../../services/prisma";
 import { edificiosDTO } from "./dtos/edificiosDTO";
 
-export const createEdificio = async ({ nome, apartamentos }: edificiosDTO): Promise<Edificio> => {
+export const createEdificio = async ({ nome }: edificiosDTO): Promise<Edificio> => {
   const edificio = await prisma.edificio.create({
     data: {
       nome,
-      apartamentos,
     }
   });
   return edificio;
