@@ -41,7 +41,7 @@ export default function NavList({ setIdEdificio }: Props) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ nome: nome, apartamentos: 0 }),
+      body: JSON.stringify({ nome: nome }),
     })
       .then((response) => response.json())
       .then(() => {

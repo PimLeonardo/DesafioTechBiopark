@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { apartamentoInterface } from "../utils/types";
 import { delay } from "../utils/utils";
+import ApartamentoDetails from "./ApartamentoDetails";
+import ApartamentoRegister from "./ApartamentoRegister";
 import CreateApartamento from "./CreateApartamento";
 
 type Props = {
@@ -72,17 +74,17 @@ export default function ApartamentosList({ idEdificio }: Props) {
       <div className="h-[6vh] text-sm font-medium flex justify-center text-center text-gray-500 border-b border-gray-200">
         <ul className="flex flex-wrap -mb-px">
           <li className="mr-2">
-            <a onClick={() => setNavStatus('todos')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'todos' ? 'text-blue-700 border-blue-700' : 'hover:text-gray-600 border-transparent'}`}>
+            <a onClick={() => setNavStatus('todos')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'todos' ? 'text-blue-700 border-blue-700' : 'hover:text-blue-700 border-transparent'}`}>
               Todos
             </a>
           </li>
           <li className="mr-2">
-            <a onClick={() => setNavStatus('disponivel')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'disponivel' ? 'text-blue-700 border-blue-700' : 'hover:text-gray-600 border-transparent'}`}>
+            <a onClick={() => setNavStatus('disponivel')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'disponivel' ? 'text-green-400 border-green-400' : 'hover:text-green-400 border-transparent'}`}>
               Disponivel
             </a>
           </li>
           <li className="mr-2">
-            <a onClick={() => setNavStatus('ocupado')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'ocupado' ? 'text-blue-700 border-blue-700' : 'hover:text-gray-600 border-transparent'}`}>
+            <a onClick={() => setNavStatus('ocupado')} className={`inline-block cursor-pointer p-4 border-b-2 rounded-t-lg ${navStatus === 'ocupado' ? 'text-red-400 border-red-400' : 'hover:text-red-400 border-transparent'}`}>
               Ocupado
             </a>
           </li>
@@ -130,7 +132,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                       {value.locatario.length > 0 ? value.locatario : "Nenhum"}
                     </td>
                     <td className="px-6 py-4">
-                      {value.disponivel ? "Disponivel" : "Ocupado"}
+                      {value.disponivel ? <p className="text-green-500">Disponivel</p> : <p className="text-red-500">Ocupado</p>}
                     </td>
                     <td className="px-6 py-4">
                       {value.aluguel}$
@@ -140,9 +142,9 @@ export default function ApartamentosList({ idEdificio }: Props) {
                         {
                           value.disponivel === true
                             ?
-                            <button className="font-medium gap-1 flex text-blue-600 hover:text-green-500 hover:underline">Alugar<CreditCardIcon className="h-5 w-5 hover:text-green-500" /></button>
+                            <ApartamentoRegister getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
                             :
-                            <button className="font-medium gap-1 flex text-blue-600 hover:text-yellow-500 hover:underline">Detalhes<PencilSquareIcon className="h-5 w-5 hover:text-yellow-500" /></button>
+                            <ApartamentoDetails getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
                         }
                         <button onClick={() => deleteApartamentos(value.id)} className="font-medium gap-1 flex text-blue-600 hover:text-red-500 hover:underline">Excluir<TrashIcon className="h-5 w-5 hover:text-red-500" /></button>
                       </div>

@@ -17,7 +17,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
       "numero": Number(numero),
       "aluguel": Number(aluguel),
       "locatario": locatario,
-      "locador": "biopark",
+      "locador": "Biopark",
       "disponivel": true,
       "id_edificio": idEdificio
     }

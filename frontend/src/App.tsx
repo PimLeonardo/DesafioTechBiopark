@@ -1,8 +1,6 @@
 import { useState } from "react";
-import ApartamentosList from "./components/ApartamentosList"
+import ApartamentoList from "./components/ApartamentoList"
 import EdificioList from "./components/EdificioList"
-import Modal from "./components/Modal";
-import { api } from "./utils/api";
 
 function App() {
   const [idEdificio, setIdEdificio] = useState<number | null>();
@@ -12,7 +10,7 @@ function App() {
       <EdificioList
         setIdEdificio={setIdEdificio}
       />
-      <ApartamentosList
+      <ApartamentoList
         idEdificio={idEdificio}
       />
     </div>
