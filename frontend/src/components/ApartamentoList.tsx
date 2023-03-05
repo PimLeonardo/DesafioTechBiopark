@@ -6,6 +6,7 @@ import { delay } from "../utils/utils";
 import ApartamentoDetails from "./ApartamentoDetails";
 import LocatarioRegister from "./LocatarioRegister";
 import CreateApartamento from "./CreateApartamento";
+import Modal from "./Modal";
 
 type Props = {
   idEdificio: number | null | undefined
@@ -63,7 +64,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
   if (apartamentos.length <= 0) {
     return (
       <div className="flex justify-center w-full h-screen bg-gray-100 relative">
-        <h3 className="mt-10">Nenhum apartamento registrado</h3>
+        <p className="mt-10 text-xl font-bold">Nenhum apartamento registrado.</p>
         <CreateApartamento getApartamentos={getApartamentos} idEdificio={idEdificio} />
       </div>
     )
@@ -142,11 +143,34 @@ export default function ApartamentosList({ idEdificio }: Props) {
                         {
                           value.disponivel === true
                             ?
-                            <LocatarioRegister getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
+                            <>
+                              <LocatarioRegister getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
+                              <Modal
+                                builder={(open) => (
+                                  <button onClick={() => open()} className="font-medium gap-1 flex text-primary-100 hover:text-red-500 hover:underline">Excluir<TrashIcon className="h-5 w-5 hover:text-red-500" /></button>
+                                )}
+                                title={"Excluir Apartamento"}
+                                body={(fechar) => (
+                                  <>
+                                    <div className="space-y-6">
+                                      <div>
+                                        Tem certeza que deseja excluir o Apartamento?
+                                      </div>
+                                      <div className="flex justify-between gap-2">
+                                        <button onClick={() => fechar()} type="button" className="w-full text-white bg-gray-600 hover:bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                          Cancelar
+                                        </button>
+                                        <button onClick={() => deleteApartamentos(value.id)} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                          Excluir
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </>
+                                )} />
+                            </>
                             :
                             <ApartamentoDetails getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
                         }
-                        <button onClick={() => deleteApartamentos(value.id)} className="font-medium gap-1 flex text-primary-100 hover:text-red-500 hover:underline">Excluir<TrashIcon className="h-5 w-5 hover:text-red-500" /></button>
                       </div>
                     </td>
                   </tr>))

@@ -1,6 +1,7 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { api } from "../utils/api";
+import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
 
 type Props = {
@@ -52,7 +53,7 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "aluguel": parseInt(aluguel)
+        "aluguel": aluguel
       }),
     })
       .then((response) => response.json())
@@ -63,6 +64,10 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
       .catch(() => console.log("Erro ao atualizar aluguel"))
       .finally(() => { getApartamentos(); })
   }
+
+  const handleMaskMoney = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    MaskMoney(e)
+  }, [])
 
   return (
     <>
@@ -78,8 +83,8 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
               modalStatus === "aluguel"
                 ?
                 <div>
-                  <input type="number" name="aluguel" id="aluguel" className="bg-gray-50 border border-gray-300 text-gray-900text-sm rounded-lg block w-full p-2.5"
-                    placeholder="Digite um novo aluguel" onChange={(v) => setAluguel(v.target.value)} required />
+                  <input type="text" name="aluguel" id="aluguel" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900text-sm rounded-lg 
+                  block w-full p-2.5" placeholder="Digite um novo aluguel" onKeyUp={handleMaskMoney} onChange={(v) => setAluguel(v.target.value)} />
                   <div className="flex justify-between gap-2 my-5">
                     <button onClick={() => getApartamentos()} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                       Cancelar

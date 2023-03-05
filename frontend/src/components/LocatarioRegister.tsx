@@ -1,6 +1,7 @@
 import { CreditCardIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { api } from "../utils/api";
+import { MaskCpf } from "../utils/mask";
 import Modal from "./Modal";
 
 type Props = {
@@ -16,7 +17,7 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
   async function registerApartamento(fechar: () => void) {
     let body = {
       "nome": locatario,
-      "cpf": parseInt(cpf),
+      "cpf": cpf,
       "id_apartamento": idApartamento
     }
 
@@ -57,6 +58,10 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
       .finally(() => { getApartamentos(); })
   }
 
+  const handleMaskCpf = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    MaskCpf(e)
+  }, [])
+
   return (
     <>
       <Modal
@@ -70,18 +75,14 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
             <div className="space-y-6">
               <div>
                 <label htmlFor="nome" className="block mb-2 text-sm font-medium text-gray-900">Nome</label>
-                <input type="text" name="nome" id="nome" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="Nome do locatario"
-                  onChange={(v) => setLocatario(v.target.value)}
-                  required />
+                <input type="text" name="nome" id="nome" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
+                text-sm rounded-lg block w-full p-2.5" placeholder="Nome do locatario" onChange={(v) => setLocatario(v.target.value)} />
               </div>
 
               <div>
                 <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-gray-900">CPF</label>
-                <input type="number" name="cpf" id="cpf" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatario"
-                  onChange={(v) => setCpf(v.target.value)}
-                  required />
+                <input type="text" name="cpf" id="cpf" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
+                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatario" onKeyUp={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
               </div>
               <button onClick={() => registerApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar

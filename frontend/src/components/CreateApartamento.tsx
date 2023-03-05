@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { api } from "../utils/api";
+import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
 
 type Props = {
@@ -15,7 +16,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
   async function createApartamento(fechar: () => void) {
     let body = {
       "numero": Number(numero),
-      "aluguel": Number(aluguel),
+      "aluguel": aluguel,
       "locatario": locatario,
       "locador": "Biopark",
       "disponivel": true,
@@ -39,6 +40,10 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
       .finally(() => { getApartamentos(); })
   }
 
+  const handleMaskMoney = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    MaskMoney(e)
+  }, [])
+
   return (
     <div className={`absolute right-0 top-0 ${idEdificio === null || idEdificio === undefined ? 'hidden' : 'visible'}`}>
       <Modal
@@ -53,18 +58,14 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
             <div className="space-y-6">
               <div>
                 <label htmlFor="numero" className="block mb-2 text-sm font-medium text-gray-900">Número</label>
-                <input type="number" name="numero" id="numero" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="Número do apartamento"
-                  onChange={(v) => setNumero(v.target.value)}
-                  required />
+                <input type="number" name="numero" id="numero" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
+                text-sm rounded-lg block w-full p-2.5" placeholder="Número do apartamento" onChange={(v) => setNumero(v.target.value)} />
               </div>
 
               <div>
                 <label htmlFor="aluguel" className="block mb-2 text-sm font-medium text-gray-900">Aluguel</label>
-                <input type="number" name="aluguel" id="aluguel" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="Preço do aluguel"
-                  onChange={(v) => setAluguel(v.target.value)}
-                  required />
+                <input type="text" name="aluguel" id="aluguel" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
+                text-sm rounded-lg block w-full p-2.5" placeholder="Preço do aluguel" onChange={(v) => setAluguel(v.target.value)} onKeyUpCapture={handleMaskMoney} />
               </div>
               <button onClick={() => createApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
