@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { api } from "../utils/api";
 import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
@@ -31,12 +32,17 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
       },
       body: JSON.stringify(body),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then(() => {
-        alert("Apartamento adicionado com sucesso!")
+        toast.success('Apartamento registrado com sucesso.')
         fechar();
       })
-      .catch(() => console.log("Erro ao adicionar apartamento"))
+      .catch(() => toast.error('Erro ao registrar apartamento'))
       .finally(() => { getApartamentos(); })
   }
 
@@ -73,6 +79,15 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
             </div>
           </>
         )}
+      />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            textAlign: 'center',
+            padding: '25px'
+          },
+        }}
       />
     </div>
   )

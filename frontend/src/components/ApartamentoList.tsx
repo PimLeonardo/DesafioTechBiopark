@@ -7,6 +7,7 @@ import ApartamentoDetails from "./ApartamentoDetails";
 import LocatarioRegister from "./LocatarioRegister";
 import CreateApartamento from "./CreateApartamento";
 import Modal from "./Modal";
+import toast, { Toaster } from "react-hot-toast";
 
 type Props = {
   idEdificio: number | null | undefined
@@ -27,20 +28,30 @@ export default function ApartamentosList({ idEdificio }: Props) {
     setLoading(true)
     await delay(500)
     await fetch(`${api}/apartamentos/${idEdificio}`, { method: 'GET', })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then((data) => setApartamentos(data))
-      .catch((err) => console.log(err))
+      .catch(() => toast.error('Erro na hora de carregar os apartamentos.'))
       .finally(() => setLoading(false));
   }
 
   async function deleteApartamentos(id: number) {
     await fetch(`${api}/apartamentos/${id}`, { method: 'DELETE', })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then(() => {
-        alert("Edifício excluido com sucesso!")
+        toast.success('Apartamento excluído com sucesso. ')
         getApartamentos()
       })
-      .catch(() => console.log("Não foi possivel excluir"))
+      .catch(() => toast.error('Erro na hora de excluir o apartamento, verifique se não tem nenhum locatário cadastrado nele.'))
   }
 
   if (loading === true) {
@@ -99,7 +110,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                 Apartamento nº
               </th>
               <th scope="col" className="px-6 py-3">
-                locatario
+                Locatário
               </th>
               <th scope="col" className="px-6 py-3">
                 Condição
@@ -136,7 +147,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                       {value.disponivel ? <p className="text-green-500">Disponivel</p> : <p className="text-red-500">Ocupado</p>}
                     </td>
                     <td className="px-6 py-4">
-                      {value.aluguel} R$
+                      R$ {value.aluguel}
                     </td>
                     <td className="px-6 text-right">
                       <div className="flex gap-2 justify-end items-center">
@@ -179,6 +190,15 @@ export default function ApartamentosList({ idEdificio }: Props) {
         </table>
       </div>
       <CreateApartamento getApartamentos={getApartamentos} idEdificio={idEdificio} />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            textAlign: 'center',
+            padding: '25px'
+          },
+        }}
+      />
     </div>
   )
 }

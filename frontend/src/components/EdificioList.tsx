@@ -1,5 +1,6 @@
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { api } from "../utils/api";
 import { edificioInterface } from "../utils/types";
 import Modal from "./Modal";
@@ -19,19 +20,27 @@ export default function NavList({ setIdEdificio }: Props) {
 
   async function getEdificios() {
     await fetch(`${api}/edificios`, { method: 'GET', })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then((data) => setEdificios(data))
-      .catch((err) => console.log(err))
+      .catch(() => toast.error('Erro na hora de carregar os edifícios.'))
   }
 
   async function deleteEdificio(id: number) {
     await fetch(`${api}/edificios/${id}`, { method: 'DELETE', })
-      .then((response) => response.json())
-      .then(() => {
-        alert("Edificio excluido com sucesso!")
-        window.location.reload()
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
       })
-      .catch(() => console.log("Não foi possivel excluir"))
+      .then(() => toast.success('Edifício excluído com sucesso.'))
+      .catch(() => toast.error('Erro na hora de excluir o edifício, verifique que não tenha nenhum apartamento cadastrado.'))
+      .finally(() => getEdificios())
   }
 
   async function createEdificio(fechar: () => void) {
@@ -44,13 +53,18 @@ export default function NavList({ setIdEdificio }: Props) {
       },
       body: JSON.stringify({ nome: nome }),
     })
-      .then((response) => response.json())
-      .then(() => {
-        alert("Edifício adicionado com sucesso!")
-        fechar();
-        window.location.reload()
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
       })
-      .catch((err) => console.log(err))
+      .then(() => {
+        toast.success('Edifício registrado com sucesso.')
+        fechar();
+      })
+      .catch(() => toast.error('Erro na hora de registrar o edifício, verifique que não há outro com esse nome.'))
+      .finally(() => getEdificios())
   }
 
   return (
@@ -122,6 +136,17 @@ export default function NavList({ setIdEdificio }: Props) {
             }
           </ul>
         </div>
+      </div>
+      <div>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              textAlign: 'center',
+              padding: '25px'
+            },
+          }}
+        />
       </div>
     </div >
   )

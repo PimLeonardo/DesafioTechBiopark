@@ -1,5 +1,6 @@
 import { CreditCardIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { api } from "../utils/api";
 import { MaskCpf } from "../utils/mask";
 import Modal from "./Modal";
@@ -14,7 +15,7 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
   const [locatario, setLocatario] = useState("");
   const [cpf, setCpf] = useState("");
 
-  async function registerApartamento(fechar: () => void) {
+  async function registerLocatario(fechar: () => void) {
     let body = {
       "nome": locatario,
       "cpf": cpf,
@@ -29,13 +30,17 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
       },
       body: JSON.stringify(body),
     })
-      .then((response) => response.json())
-      .then(() => {
-        updateApartamento(fechar);
-        alert("Locatario adicionado com sucesso!")
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
       })
-      .catch(() => console.log("Erro ao adicionar locatario"))
-      .finally(() => { getApartamentos(); })
+      .then(() => {
+        toast.success('Locatário criado com sucesso.')
+        updateApartamento(fechar);
+      })
+      .catch(() => toast.error('Erro na hora de cadastrar o locatário, verifique que não há outro já cadastrado com esse CPF.'))
   }
 
   async function updateApartamento(fechar: () => void) {
@@ -54,7 +59,7 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
       .then(() => {
         fechar();
       })
-      .catch(() => console.log("Erro ao atualizar apartamento"))
+      .catch(() => toast.error('Erro na hora de atualizar status do apartamento.'))
       .finally(() => { getApartamentos(); })
   }
 
@@ -76,20 +81,29 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
               <div>
                 <label htmlFor="nome" className="block mb-2 text-sm font-medium text-gray-900">Nome</label>
                 <input type="text" name="nome" id="nome" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="Nome do locatario" onChange={(v) => setLocatario(v.target.value)} />
+                text-sm rounded-lg block w-full p-2.5" placeholder="Nome do locatário " onChange={(v) => setLocatario(v.target.value)} />
               </div>
 
               <div>
                 <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-gray-900">CPF</label>
                 <input type="text" name="cpf" id="cpf" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatario" onKeyUp={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
+                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatário " onKeyUp={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
               </div>
-              <button onClick={() => registerApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button onClick={() => registerLocatario(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
               </button>
             </div>
           </>
         )}
+      />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            textAlign: 'center',
+            padding: '25px'
+          },
+        }}
       />
     </>
   )

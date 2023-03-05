@@ -1,5 +1,6 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { api } from "../utils/api";
 import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
@@ -16,13 +17,17 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
 
   async function deleteLocatario(fechar: () => void) {
     await fetch(`${api}/locatario/${idApartamento}`, { method: 'DELETE', })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then(() => {
-        alert("Locatario excluido com sucesso!")
+        toast.success('Locatário excluído com sucesso.')
         updateApartamento(fechar);
       })
-      .catch(() => console.log("Não foi possivel excluir o locatario"))
-      .finally(() => { getApartamentos(); })
+      .catch(() => toast.error('Erro na hora de excluir o locatário.'))
   }
 
   async function updateApartamento(fechar: () => void) {
@@ -41,7 +46,7 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
       .then(() => {
         fechar();
       })
-      .catch(() => console.log("Erro ao atualizar apartamento"))
+      .catch(() => toast.error('Erro na hora de atualizar o apartamento.'))
       .finally(() => { getApartamentos(); })
   }
 
@@ -56,12 +61,17 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
         "aluguel": aluguel
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
       .then(() => {
-        alert("Aluguel atualizado com sucesso!")
+        toast.success('Aluguel atualizado com sucesso.')
         fechar();
       })
-      .catch(() => console.log("Erro ao atualizar aluguel"))
+      .catch(() => toast.error('Erro na hora de atualizar o aluguel.'))
       .finally(() => { getApartamentos(); })
   }
 
@@ -111,10 +121,10 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
                           Nome do locador: {value.locador}
                         </div>
                         <div>
-                          Nome do locatario: {value.locatario}
+                          Nome do locatário : {value.locatario}
                         </div>
                         <div>
-                          Aluguel: {value.aluguel} $
+                          Aluguel: R$ {value.aluguel}
                         </div>
                       </div>
                       <div className="flex justify-between gap-2">
@@ -122,7 +132,7 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
                           Alterar aluguel
                         </button>
                         <button onClick={() => deleteLocatario(fechar)} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                          Remover locatario
+                          Remover locatário
                         </button>
                       </div>
                     </div>
@@ -131,6 +141,15 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
           </>
         )
         }
+      />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            textAlign: 'center',
+            padding: '25px'
+          },
+        }}
       />
     </>
   )
