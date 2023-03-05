@@ -9,7 +9,7 @@ type Props = {
   getApartamentos: any
 }
 
-export default function ApartamentoRegister({ getApartamentos, idApartamento, apartamentos }: Props) {
+export default function LocatarioRegister({ getApartamentos, idApartamento, apartamentos }: Props) {
   const [locatario, setLocatario] = useState("");
   const [cpf, setCpf] = useState("");
 
@@ -29,12 +29,12 @@ export default function ApartamentoRegister({ getApartamentos, idApartamento, ap
       body: JSON.stringify(body),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
+      .then(() => {
+        updateApartamento(fechar);
         alert("Locatario adicionado com sucesso!")
       })
       .catch(() => console.log("Erro ao adicionar locatario"))
-      .finally(() => { updateApartamento(fechar); })
+      .finally(() => { getApartamentos(); })
   }
 
   async function updateApartamento(fechar: () => void) {
@@ -61,7 +61,7 @@ export default function ApartamentoRegister({ getApartamentos, idApartamento, ap
     <>
       <Modal
         builder={(open) => (
-          <button onClick={() => open()} className="font-medium gap-1 flex text-blue-600 hover:text-green-500 hover:underline">Alugar<CreditCardIcon className="h-5 w-5 hover:text-green-500" />
+          <button onClick={() => open()} className="font-medium gap-1 flex text-primary-100 hover:text-green-500 hover:underline">Alugar<CreditCardIcon className="h-5 w-5 hover:text-green-500" />
           </button>
         )}
         title={"Adicionar Apartamento"}
@@ -83,7 +83,7 @@ export default function ApartamentoRegister({ getApartamentos, idApartamento, ap
                   onChange={(v) => setCpf(v.target.value)}
                   required />
               </div>
-              <button onClick={() => registerApartamento(fechar)} type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button onClick={() => registerApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
               </button>
             </div>

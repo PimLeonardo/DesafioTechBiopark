@@ -40,10 +40,10 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
   }
 
   return (
-    <div className={`absolute right-0 bottom-0 ${idEdificio === null || idEdificio === undefined ? 'hidden' : 'visible'}`}>
+    <div className={`absolute right-0 top-0 ${idEdificio === null || idEdificio === undefined ? 'hidden' : 'visible'}`}>
       <Modal
         builder={(open) => (
-          <button onClick={() => open()} type="button" className="w-24 h-24 m-5 bg-blue-700 hover:bg-blue-800 font-medium rounded-full text-sm text-white">
+          <button onClick={() => open()} type="button" className="h-10 p-2 mr-7 mt-2 bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm text-white">
             Adicionar
           </button>
         )}
@@ -66,7 +66,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
                   onChange={(v) => setAluguel(v.target.value)}
                   required />
               </div>
-              <button onClick={() => createApartamento(fechar)} type="button" className="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button onClick={() => createApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
               </button>
             </div>

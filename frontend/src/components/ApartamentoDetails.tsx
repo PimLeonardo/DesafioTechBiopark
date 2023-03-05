@@ -18,9 +18,10 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
       .then((response) => response.json())
       .then(() => {
         alert("Locatario excluido com sucesso!")
+        updateApartamento(fechar);
       })
       .catch(() => console.log("Não foi possivel excluir o locatario"))
-      .finally(() => { updateApartamento(fechar); })
+      .finally(() => { getApartamentos(); })
   }
 
   async function updateApartamento(fechar: () => void) {
@@ -67,7 +68,7 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
     <>
       <Modal
         builder={(open) => (
-          <button onClick={() => open()} className="font-medium gap-1 flex text-blue-600 hover:text-yellow-500 hover:underline">Detalhes<PencilSquareIcon className="h-5 w-5 hover:text-yellow-500" />
+          <button onClick={() => open()} className="font-medium gap-1 flex text-primary-100 hover:text-yellow-500 hover:underline">Detalhes<PencilSquareIcon className="h-5 w-5 hover:text-yellow-500" />
           </button>
         )}
         title={"Detalhes do apartamento"}
@@ -77,11 +78,10 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
               modalStatus === "aluguel"
                 ?
                 <div>
-                  <p>Aluguel atual: {apartamentos.map((value) => (value.aluguel))}$</p>
                   <input type="number" name="aluguel" id="aluguel" className="bg-gray-50 border border-gray-300 text-gray-900text-sm rounded-lg block w-full p-2.5"
                     placeholder="Digite um novo aluguel" onChange={(v) => setAluguel(v.target.value)} required />
                   <div className="flex justify-between gap-2 my-5">
-                    <button onClick={() => fechar} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    <button onClick={() => getApartamentos()} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                       Cancelar
                     </button>
                     <button onClick={() => updateAluguel(fechar)} type="button" className="w-full text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

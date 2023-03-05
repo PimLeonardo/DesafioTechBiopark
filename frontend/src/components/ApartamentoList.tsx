@@ -1,10 +1,10 @@
-import { TrashIcon, PencilSquareIcon, CreditCardIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { apartamentoInterface } from "../utils/types";
 import { delay } from "../utils/utils";
 import ApartamentoDetails from "./ApartamentoDetails";
-import ApartamentoRegister from "./ApartamentoRegister";
+import LocatarioRegister from "./LocatarioRegister";
 import CreateApartamento from "./CreateApartamento";
 
 type Props = {
@@ -36,7 +36,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
     await fetch(`${api}/apartamentos/${id}`, { method: 'DELETE', })
       .then((response) => response.json())
       .then(() => {
-        alert("Edificio excluido com sucesso!")
+        alert("Edifício excluido com sucesso!")
         getApartamentos()
       })
       .catch(() => console.log("Não foi possivel excluir"))
@@ -91,8 +91,8 @@ export default function ApartamentosList({ idEdificio }: Props) {
         </ul>
       </div>
       <div className="h-[94vh] p-2 scrollbar relative overflow-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+        <table className="w-full text-sm text-left text-gray-900">
+          <thead className="text-xs text-gray-900 uppercase bg-gray-50">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Apartamento nº
@@ -107,7 +107,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                 Aluguel
               </th>
               <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
+                <span className="sr-only">Botões de ação</span>
               </th>
             </tr>
           </thead>
@@ -126,7 +126,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                 .map((value) => (
                   <tr key={value.id} className="bg-white border-b hover:bg-gray-50">
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                      {value.numero}
+                      Nº {value.numero}
                     </th>
                     <td className="px-6 py-4">
                       {value.locatario.length > 0 ? value.locatario : "Nenhum"}
@@ -135,18 +135,18 @@ export default function ApartamentosList({ idEdificio }: Props) {
                       {value.disponivel ? <p className="text-green-500">Disponivel</p> : <p className="text-red-500">Ocupado</p>}
                     </td>
                     <td className="px-6 py-4">
-                      {value.aluguel}$
+                      {value.aluguel} R$
                     </td>
                     <td className="px-6 text-right">
                       <div className="flex gap-2 justify-end items-center">
                         {
                           value.disponivel === true
                             ?
-                            <ApartamentoRegister getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
+                            <LocatarioRegister getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
                             :
                             <ApartamentoDetails getApartamentos={getApartamentos} idApartamento={value.id} apartamentos={apartamentos} />
                         }
-                        <button onClick={() => deleteApartamentos(value.id)} className="font-medium gap-1 flex text-blue-600 hover:text-red-500 hover:underline">Excluir<TrashIcon className="h-5 w-5 hover:text-red-500" /></button>
+                        <button onClick={() => deleteApartamentos(value.id)} className="font-medium gap-1 flex text-primary-100 hover:text-red-500 hover:underline">Excluir<TrashIcon className="h-5 w-5 hover:text-red-500" /></button>
                       </div>
                     </td>
                   </tr>))

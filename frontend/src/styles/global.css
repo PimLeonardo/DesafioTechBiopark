@@ -9,16 +9,7 @@ body {
 }
 
 * {
-  font-family: Poppins, sans-serif;
-}
-
-.color-primary {
-  color: #2e3a48;
-}
-
-.bg-primary {
-  background-color: #f3f4f6;
-  color: white;
+  font-family: Kaleko 205 Text Heavy, sans-serif;
 }
 
 .scrollbar::-webkit-scrollbar {

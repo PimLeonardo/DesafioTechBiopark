@@ -80,7 +80,7 @@ export default function DialogModal({
                   >
                     {title}
                     <XMarkIcon
-                      className="flex-row h-4 w-4 hover:text-red-500 cursor-pointer"
+                      className="flex-row h-5 w-5 hover:text-red-500 cursor-pointer"
                       onClick={closeModal}
                     />
                   </Dialog.Title>
