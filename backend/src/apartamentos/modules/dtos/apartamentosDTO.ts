@@ -1,6 +1,6 @@
 export interface apartamentosDTO {
   numero: number;
-  aluguel: number;
+  aluguel: string;
   locatario: string;
   locador: string;
   disponivel: boolean;

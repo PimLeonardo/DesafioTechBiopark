@@ -1,5 +1,5 @@
 export interface locatarioDTO {
   nome: string;
-  cpf: number;
+  cpf: string;
   id_apartamento: number;
 }

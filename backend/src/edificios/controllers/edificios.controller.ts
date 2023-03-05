@@ -6,7 +6,7 @@ export const create = async (req: Request, res: Response) => {
         const edificio  = await createEdificio(req.body)
         res.status(201).json(edificio)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({messagem: error.message})
     }
 }
 
@@ -15,7 +15,7 @@ export const findAll = async (req: Request, res: Response) => {
         const edificios  = await findAllEdificios()
         res.status(201).json(edificios)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({messagem: error.message})
     }
 }
 
@@ -24,7 +24,7 @@ export const findId = async (req: Request, res: Response) => {
         const edificios  = await findEdificio(req)
         res.status(201).json(edificios)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({messagem: error.message})
     }
 }
 
@@ -33,7 +33,7 @@ export const updateId = async (req: Request, res: Response) => {
         const edificios  = await updateEdificio(req)
         res.status(201).json(edificios)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({messagem: error.message})
     }
 }
 
@@ -42,6 +42,6 @@ export const deleteId = async (req: Request, res: Response) => {
         const edificios  = await deleteEdificio(req)
         res.status(201).json(edificios)
     } catch (error) {
-        res.status(400).json(error)
+        res.status(400).json({messagem: error.message})
     }
 }

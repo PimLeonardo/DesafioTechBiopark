@@ -24,7 +24,7 @@ model Edificio {
 model Apartamento {
   id         Int     @id @default(autoincrement())
   numero     Int     @unique
-  aluguel    Float
+  aluguel    String
   locatario  String
   locador    String
   disponivel Boolean
@@ -40,7 +40,7 @@ model Apartamento {
 model Locatario {
   id   Int    @id @default(autoincrement())
   nome String
-  cpf  Int    @unique
+  cpf  String @unique
 
   apartament     Apartamento @relation(fields: [id_apartamento], references: [id])
   id_apartamento Int         @unique
