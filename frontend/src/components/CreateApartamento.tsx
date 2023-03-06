@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { api } from "../utils/api";
-import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
+import { MaskMoney, MaskMoneyConvert } from "../utils/mask";
+import { api } from "../utils/api";
 
 type Props = {
   getApartamentos: any;
@@ -17,7 +17,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
   async function createApartamento(fechar: () => void) {
     let body = {
       "numero": Number(numero),
-      "aluguel": aluguel,
+      "aluguel": MaskMoneyConvert(aluguel),
       "locatario": locatario,
       "locador": "Biopark",
       "disponivel": true,
@@ -54,7 +54,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
     <div className={`absolute right-0 top-0 ${idEdificio === null || idEdificio === undefined ? 'hidden' : 'visible'}`}>
       <Modal
         builder={(open) => (
-          <button onClick={() => open()} type="button" className="h-10 p-2 mr-7 mt-2 bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm text-white">
+          <button onClick={() => open()} type="button" className="h-9 p-2 mr-2 mt-2 bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm text-white">
             Adicionar
           </button>
         )}
@@ -73,7 +73,13 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
                 <input type="text" name="aluguel" id="aluguel" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
                 text-sm rounded-lg block w-full p-2.5" placeholder="Preço do aluguel" onChange={(v) => setAluguel(v.target.value)} onKeyUpCapture={handleMaskMoney} />
               </div>
-              <button onClick={() => createApartamento(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button onClick={() => {
+                if (aluguel.length < 3 || numero == "") {
+                  toast.error('Verifique os dados e preencha corretamente.')
+                } else {
+                  createApartamento(fechar)
+                }
+              }} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
               </button>
             </div>

@@ -1,13 +1,13 @@
-import { TrashIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { api } from "../utils/api";
-import { apartamentoInterface } from "../utils/types";
-import { delay } from "../utils/utils";
+import { TrashIcon } from "@heroicons/react/24/solid";
+import toast, { Toaster } from "react-hot-toast";
 import ApartamentoDetails from "./ApartamentoDetails";
 import LocatarioRegister from "./LocatarioRegister";
 import CreateApartamento from "./CreateApartamento";
 import Modal from "./Modal";
-import toast, { Toaster } from "react-hot-toast";
+import { apartamentoInterface } from "../utils/types";
+import { api } from "../utils/api";
+import { delay } from "../utils/utils";
 
 type Props = {
   idEdificio: number | null | undefined

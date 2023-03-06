@@ -1,9 +1,9 @@
-import { XCircleIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
+import { XCircleIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "./Modal";
 import { api } from "../utils/api";
 import { edificioInterface } from "../utils/types";
-import Modal from "./Modal";
 
 type Props = {
   setIdEdificio: React.Dispatch<React.SetStateAction<number | null | undefined>>
@@ -44,7 +44,6 @@ export default function NavList({ setIdEdificio }: Props) {
   }
 
   async function createEdificio(fechar: () => void) {
-    console.log(nome)
     await fetch(`${api}/edificios`, {
       method: 'POST',
       headers: {
@@ -90,7 +89,13 @@ export default function NavList({ setIdEdificio }: Props) {
                       <input type="text" name="name" id="name" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
                        text-sm rounded-lg block w-full p-2.5" placeholder="Nome do edifício" onChange={(v) => setNome(v.target.value)} />
                     </div>
-                    <button onClick={() => createEdificio(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    <button onClick={() => {
+                      if (nome.length < 2) {
+                        toast.error('Verifique os dados e preencha corretamente.')
+                      } else {
+                        createEdificio(fechar)
+                      }
+                    }} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                       Cadastrar
                     </button>
                   </div>

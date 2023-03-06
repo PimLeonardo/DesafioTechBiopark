@@ -1,9 +1,9 @@
-import { CreditCardIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
+import { CreditCardIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
+import Modal from "./Modal";
 import { api } from "../utils/api";
 import { MaskCpf } from "../utils/mask";
-import Modal from "./Modal";
 
 type Props = {
   idApartamento: number
@@ -74,7 +74,7 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
           <button onClick={() => open()} className="font-medium gap-1 flex text-primary-100 hover:text-green-500 hover:underline">Alugar<CreditCardIcon className="h-5 w-5 hover:text-green-500" />
           </button>
         )}
-        title={"Adicionar Apartamento"}
+        title={"Adicionar Locatário"}
         body={(fechar) => (
           <>
             <div className="space-y-6">
@@ -89,7 +89,13 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
                 <input type="text" name="cpf" id="cpf" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
                 text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatário " onKeyUp={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
               </div>
-              <button onClick={() => registerLocatario(fechar)} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <button onClick={() => {
+                if (locatario.length < 2 || cpf.length < 11) {
+                  toast.error('Verifique os dados e preencha corretamente.')
+                } else {
+                  registerLocatario(fechar)
+                }
+              }} type="button" className="w-full text-white bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                 Cadastrar
               </button>
             </div>

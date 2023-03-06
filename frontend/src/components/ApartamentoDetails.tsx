@@ -1,9 +1,9 @@
-import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { useCallback, useState } from "react";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
-import { api } from "../utils/api";
-import { MaskMoney } from "../utils/mask";
 import Modal from "./Modal";
+import { api } from "../utils/api";
+import { MaskMoney, MaskMoneyConvert } from "../utils/mask";
 
 type Props = {
   idApartamento: number
@@ -58,7 +58,7 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "aluguel": aluguel
+        "aluguel": MaskMoneyConvert(aluguel)
       }),
     })
       .then((response) => {
@@ -99,7 +99,13 @@ export default function ApartamentoDetails({ getApartamentos, idApartamento, apa
                     <button onClick={() => getApartamentos()} type="button" className="w-full text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                       Cancelar
                     </button>
-                    <button onClick={() => updateAluguel(fechar)} type="button" className="w-full text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    <button onClick={() => {
+                      if (aluguel.length < 3) {
+                        toast.error('Verifique os dados e preencha corretamente.')
+                      } else {
+                        updateAluguel(fechar)
+                      }
+                    }} type="button" className={"w-full text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"}>
                       Confirmar
                     </button>
                   </div>

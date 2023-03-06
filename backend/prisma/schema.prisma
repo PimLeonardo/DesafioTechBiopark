@@ -42,7 +42,7 @@ model Locatario {
   nome String
   cpf  String @unique
 
-  apartament     Apartamento @relation(fields: [id_apartamento], references: [id])
+  apartamento    Apartamento @relation(fields: [id_apartamento], references: [id])
   id_apartamento Int         @unique
 
   @@map("locatario")
