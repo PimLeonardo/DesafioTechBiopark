@@ -14,10 +14,18 @@ Entre no diretório do projeto
   cd DesafioTechBiopark/
 ```
 
+## Backend
+
 Entre no diretório do Backend
 
 ```bash
   cd backend/
+```
+
+Instale todas as dependências
+
+```bash
+  npm install
 ```
 
 ## Banco de dados
@@ -40,20 +48,6 @@ Para criar as tabelas o comando
   npx prisma migrate dev
 ```
 
-## Backend
-
-Instale todas as dependências
-
-```bash
-  npm install
-```
-
-Colocar pra rodar o Backend
-
-```bash
-  npm run dev
-```
-
 ## Frontend
 
 Entre no diretório do Frontend
@@ -68,10 +62,14 @@ Instale todas as dependências
   npm install
 ```
 
-Colocar pra rodar o Frontend
+## Rodar o projeto
+
+Dentro do diretório Frontend e Backend o comando para iniciar
 
 ```bash
   npm run dev
 ```
 
-A aplicação ira rodar em: http://localhost:5173/
+- A aplicação Frontend vai rodar em: http://localhost:5173/
+
+- A aplicação Backend vai rodar em: http://localhost:3333/
