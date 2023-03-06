@@ -32,6 +32,14 @@ Para rodar esse projeto, você vai precisar adicionar a seguinte variável de am
 
 dentro de .env.example há todas as instruções necessárias para para montar a database url, para fazer a conexão com o seu banco de dados Postgre, [acesse a documentação oficial para mais detalhes.](https://www.prisma.io/docs/concepts/database-connectors/postgresql)
 
+### Criação das tabelas
+
+Para criar as tabelas o comando
+
+```bash
+  npx prisma migrate dev
+```
+
 ## Backend
 
 Instale todas as dependências
