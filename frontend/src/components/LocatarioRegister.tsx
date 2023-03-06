@@ -87,10 +87,10 @@ export default function LocatarioRegister({ getApartamentos, idApartamento, apar
               <div>
                 <label htmlFor="cpf" className="block mb-2 text-sm font-medium text-gray-900">CPF</label>
                 <input type="text" name="cpf" id="cpf" autoComplete="off" className="bg-gray-50 border border-gray-300 text-gray-900
-                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatário " onKeyUp={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
+                text-sm rounded-lg block w-full p-2.5" placeholder="CPF do locatário " onKeyUpCapture={handleMaskCpf} onChange={(v) => setCpf(v.target.value)} />
               </div>
               <button onClick={() => {
-                if (locatario.length < 2 || cpf.length < 11) {
+                if (locatario.length < 2 || cpf.length != 11) {
                   toast.error('Verifique os dados e preencha corretamente.')
                 } else {
                   registerLocatario(fechar)
