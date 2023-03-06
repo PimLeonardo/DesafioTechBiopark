@@ -5,8 +5,8 @@ import { MaskMoney, MaskMoneyConvert } from "../utils/mask";
 import { api } from "../utils/api";
 
 type Props = {
-  getApartamentos: any;
-  idEdificio: number;
+  getApartamentos: () => Promise<void>
+  idEdificio: number
 }
 
 export default function CreateApartamento({ getApartamentos, idEdificio }: Props) {
@@ -54,7 +54,7 @@ export default function CreateApartamento({ getApartamentos, idEdificio }: Props
     <div className={`absolute right-0 top-0 ${idEdificio === null || idEdificio === undefined ? 'hidden' : 'visible'}`}>
       <Modal
         builder={(open) => (
-          <button onClick={() => open()} type="button" className="h-9 p-2 mr-2 mt-2 bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm text-white">
+          <button onClick={() => open()} type="button" className="h-8 p-1 mr-2 mt-2 bg-secondary-100 hover:bg-secondary-200 font-medium rounded-lg text-sm text-white">
             Adicionar
           </button>
         )}

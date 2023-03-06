@@ -165,7 +165,7 @@ export default function ApartamentosList({ idEdificio }: Props) {
                                   <>
                                     <div className="space-y-6">
                                       <div>
-                                        Tem certeza que deseja excluir o Apartamento?
+                                        Tem certeza que deseja excluir o apartamento?
                                       </div>
                                       <div className="flex justify-between gap-2">
                                         <button onClick={() => fechar()} type="button" className="w-full text-white bg-gray-600 hover:bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

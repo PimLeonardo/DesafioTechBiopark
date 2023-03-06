@@ -38,9 +38,11 @@ export default function NavList({ setIdEdificio }: Props) {
         }
         return response.json()
       })
-      .then(() => toast.success('Edifício excluído com sucesso.'))
+      .then(() => {
+        toast.success('Edifício excluído com sucesso.')
+        window.location.reload()
+      })
       .catch(() => toast.error('Erro na hora de excluir o edifício, verifique que não tenha nenhum apartamento cadastrado.'))
-      .finally(() => window.location.reload())
   }
 
   async function createEdificio(fechar: () => void) {

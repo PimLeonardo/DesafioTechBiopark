@@ -8,7 +8,7 @@ import { MaskMoney, MaskMoneyConvert } from "../utils/mask";
 type Props = {
   idApartamento: number
   apartamentos: (string | number | any)[]
-  getApartamentos: any
+  getApartamentos: () => Promise<void>
 }
 
 export default function ApartamentoDetails({ getApartamentos, idApartamento, apartamentos }: Props) {

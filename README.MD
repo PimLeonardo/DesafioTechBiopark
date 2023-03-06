@@ -1,46 +1,69 @@
-# Desafio tech biopark
+# Desafio Tech Programa Trainee Biopark
 
-Em 2022 inaugurou-se o primeiro edifício residencial no ecossistema, com uma sala comercial e 18 apartamentos. Ao longo do ano de 2023, está previsto a entrega de centenas de apartamentos para moradia dos estudantes, colaboradores e empreendedores. Nesse contexto o Desafio Tech da 3ª Edição do Programa Trainee Biopark traz uma problemática que visa desenvolver um sistema com o objetivo de facilitar a gestão dos apartamentos entregues no ecossistema.
+Instruções de como rodar o projeto, Banco de dados, Frontend e Backend
 
-## Requisitos:
+Clone o projeto
 
-- O sistema deve permitir cadastrar edifícios e apartamentos;
-- O sistema deve permitir visualizar a disponibilidade dos apartamentos;
-- O sistema deve permitir alugar um apartamento para um locatário;
-- O sistema deve permitir visualizar o locatário do apartamento;
+```bash
+  git clone https://github.com/PimLeonardo/DesafioTechBiopark.git
+```
 
-## Premissas:
+Entre no diretório do projeto
 
-- Cada apartamento do ecossistema pertence a um edifício;
-- Cada apartamento alugado deve ter um locatário;
-- Cada apartamento alugado deve ter o valor de aluguel mensal cadastrado;
-- Considere o Biopark como locador dos apartamentos;
+```bash
+  cd DesafioTechBiopark/
+```
 
-## Tecnologias:
+Entre no diretório do Backend
 
-- Linguagens
-  - Temos preferência por desenvolvimento nas linguagens Java, Python, Javascript ou C#, mas pode ser usado qualquer linguagem, depois apenas nos explique o porquê da sua escolha.
-- Banco de dados
-  - Utilize um dos bancos de dados abaixo: MySQL ou PostgreSQL.
-- Tabelas
-  - A criação do banco e das tabelas fica a seu critério de como será feito, seja via script, aplicação, etc.
-- APIs
-  - A API deverá seguir o modelo RESTful com formato JSON.
+```bash
+  cd backend/
+```
 
-## Orientações Gerais:
+## Banco de dados
 
-### Sistema:
+Primeiramente, o banco de dados escolhido foi o PostgreSQL. Para sua configuração, será necessária a criação de um aquivo .env, usando o .env.example como exemplo. Ademais, todas as tabelas e SQL podem ser encontradas [aqui.](./backend/prisma/migrations/20230306034250_biopark)
 
-O Sistema deve conter:
+### Variáveis de Ambiente
 
-- Banco de dados;
-- Backend;
-- Frontend;
+Para rodar esse projeto, você vai precisar adicionar a seguinte variável de ambiente no seu .env:
 
-### Envio do Desafio:
+`DATABASE_URL`
 
-Seu desafio deve ser enviado como repositório público (Github), com commits pequenos e bem descritos. O seu repositório deve estar com um modelo de licença de código aberto. Não envie nenhum arquivo além do próprio código e sua documentação. Tome cuidado para não enviar vídeos, áudios, binários, etc.
+dentro de .env.example há todas as instruções necessárias para para montar a database url, para fazer a conexão com o seu banco de dados Postgre, [acesse a documentação oficial para mais detalhes.](https://www.prisma.io/docs/concepts/database-connectors/postgresql)
 
-### Boas Práticas:
+## Backend
 
-Siga boas práticas de desenvolvimento, de qualidade e de governança de código. Oriente os avaliadores a como instalar, testar e executar seu código. A partir de um README dentro do projeto.
+Instale todas as dependências
+
+```bash
+  npm install
+```
+
+Colocar pra rodar o Backend
+
+```bash
+  npm run dev
+```
+
+## Frontend
+
+Entre no diretório do Frontend
+
+```bash
+  cd frontend
+```
+
+Instale todas as dependências
+
+```bash
+  npm install
+```
+
+Colocar pra rodar o Frontend
+
+```bash
+  npm run dev
+```
+
+A aplicação ira rodar em: http://localhost:5173/

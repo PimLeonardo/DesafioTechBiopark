@@ -8,7 +8,7 @@ import { MaskCpf } from "../utils/mask";
 type Props = {
   idApartamento: number
   apartamentos: (string | number | any)[]
-  getApartamentos: any
+  getApartamentos: () => Promise<void>
 }
 
 export default function LocatarioRegister({ getApartamentos, idApartamento, apartamentos }: Props) {
